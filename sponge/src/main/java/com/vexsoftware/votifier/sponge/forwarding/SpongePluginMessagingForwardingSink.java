@@ -33,7 +33,8 @@ public class SpongePluginMessagingForwardingSink implements ForwardingVoteSink, 
     @Override
     public void handlePayload(ChannelBuf channelBuf, RemoteConnection remoteConnection, Platform.Type type) {
         try {
-            byte[] bytes = channelBuf.readBytes(channelBuf.available());
+            ChannelBuf slice = channelBuf.slice();
+            byte[] bytes = slice.readBytes(slice.available());
             String message = new String(bytes, StandardCharsets.UTF_8);
             JSONObject jsonObject = new JSONObject(message);
             Vote v = new Vote(jsonObject);
