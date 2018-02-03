@@ -38,6 +38,9 @@ public class SpongePluginMessagingForwardingSink implements ForwardingVoteSink, 
             String message = new String(bytes, StandardCharsets.UTF_8);
             JSONObject jsonObject = new JSONObject(message);
             Vote v = new Vote(jsonObject);
+
+            p.getLogger().info("Received vote from " + v.getUsername());
+
             listener.onForward(v);
         } catch (Exception e) {
             p.getLogger().error("There was an unknown error when processing a forwarded vote.", e);
